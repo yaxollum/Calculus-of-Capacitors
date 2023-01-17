@@ -2,7 +2,6 @@
 layout: math
 ---
 
-
-{% include discharching.md %}
+{% include discharging.md %}
 
 {% include problem.md %}

@@ -27,7 +27,7 @@ Next, we integrate both sides:
 \\[Q=e^X \cdot e^{-\frac{t}{RC}}\\]
 where $$X$$ is a constant.
 
-Initially, when $$t=0$$, the capacitor's charge $$Q$$ is equal to $$Q_0$$. This implies that $$e^X=Q_0$$. We now have a formula expressing $$Q$$ in terms of $$t$$:
+Initially, when $$t=0$$, the capacitor's charge $$Q$$ is equal to $$Q_0$$. This implies that $$e^X=Q_0$$. Therefore, we now have a formula expressing $$Q$$ in terms of $$t$$:
 \\[Q=Q_0 \cdot e^{-\frac{t}{RC}}\\]
 
-This shows that, when a capacitor is discharged through a resistor, its charge decays exponentially.
+This shows that when a capacitor is discharged through a resistor, its charge decays exponentially.
