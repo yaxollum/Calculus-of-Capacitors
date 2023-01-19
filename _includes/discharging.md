@@ -4,6 +4,8 @@ When a charged capacitor is connected in a circuit to a resistor, charges will f
 
 In this section, we will find a formula for the capacitor's charge $$Q$$ in terms of the time $$t$$.
 
+<canvas id="discharging-simulation"></canvas>
+
 ### Creating a differential equation
 
 There are 3 facts about the circuit which we know:
