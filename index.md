@@ -13,3 +13,7 @@ layout: math
 {% include discharging.md %}
 
 {% include problem.md %}
+
+<br>
+
+[View APA References](references)
