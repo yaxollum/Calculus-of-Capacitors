@@ -16,4 +16,4 @@ layout: math
 
 <br>
 
-[View APA References](references)
+[View APA References](assets/ref.pdf)
