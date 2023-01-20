@@ -4,9 +4,13 @@ Capacitors are used to temporarily store energy, similar to small batteries. But
 
 ### Capacitors in Camera Flashes
 
+![Camera with exposed capacitor](assets/img/camera.jpg)
+
 Typical portable cameras are powered by $$1.5V$$ batteries, which is not enough to power the camera flash that briefly turns on when the user presses the shutter button. To power the flash, a step-up circuit is used to bring the voltage of the power supplied by the battery up to around $$200V$$ and the capacitor in the camera is charged to a high voltage using the power. When the user presses on the shutter button, the capacitor is discharged instantly through the flash bulb, which produces a bright flash of light.
 
 ### Capacitors in Electric Buses
+
+![Bus that runs entirely on ultracapacitors](assets/img/bus.jpg)
 
 One possible application of capacitors are in electric buses. A typical capacitor's capacity would not be enough to power a bus, but a new form of capacitor, called ultracapacitors, has a much higher energy density, and is suitable for running a bus. Using a capacitor instead of a battery comes with a number of advantages such as less overall maintenance required, as batteries lose capacity after a certain amount of charging cycle. Capacitors also charge and discharge much quicker.
 

@@ -1,3 +1,5 @@
+![Common form factors of capacitors](assets/img/capacitors.jpg)
+
 ## What is a capacitor?
 
 A **capacitor** is a circuit component which stores electric potential energy. It is made up of two parallel plates: a positive plate and a negative plate. An insulator is inserted in between the plates to ensure that electrons cannot flow between the plates. The two plates have opposite charges, and the **charge** of a capacitor refers to the charge of its positive plate. Charge is measured in coulombs and represented using the symbol $$Q$$.
