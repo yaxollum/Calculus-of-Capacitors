@@ -8,6 +8,8 @@ layout: math
 
 {% include applications.md %}
 
+{% include energy.md %}
+
 {% include discharging.md %}
 
 {% include problem.md %}
