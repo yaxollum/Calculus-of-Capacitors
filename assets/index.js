@@ -1,13 +1,48 @@
 window.onload = function () {
-    var c = document.getElementById("discharging-simulation");
+    var container = document.getElementById("discharging-simulation");
+    container.style.borderStyle = "dotted";
+    container.style.borderWidth = "1px";
+    container.style.padding = "1em";
+    container.style.margin = "1em";
+    var controls = document.createElement("p");
+    var info = document.createElement("p");
+    var running = false;
+    var t = 0;
+    var playPauseButton = document.createElement("button");
+    playPauseButton.style.margin = "0.3em";
+    var updatePlayPauseText = function () {
+        if (running) {
+            playPauseButton.innerText = "Pause Simulation";
+        }
+        else {
+            playPauseButton.innerText = "Play Simulation";
+        }
+    };
+    playPauseButton.onclick = function () {
+        running = !running;
+        updatePlayPauseText();
+    };
+    updatePlayPauseText();
+    var resetButton = document.createElement("button");
+    resetButton.onclick = function () {
+        t = 0;
+    };
+    resetButton.style.margin = "0.3em";
+    resetButton.innerText = "Reset";
+    controls.appendChild(playPauseButton);
+    controls.appendChild(resetButton);
+    container.appendChild(controls);
+    container.appendChild(info);
+    var c = document.createElement("canvas");
+    c.style.maxWidth = "100%";
+    c.style.maxHeight = "50vh";
+    container.appendChild(c);
     var dpi = 5;
     c.width *= dpi;
     c.height = c.width / 2;
     var ctx = c.getContext("2d");
     ctx.scale(dpi, dpi);
-    c.style.maxWidth = "100%";
-    c.style.maxHeight = "50vh";
-    var conv = function (x) { return x / 100 * c.width / dpi; };
+    var conv = function (x) { return ((x / 100) * c.width) / dpi; };
     var drawLine = function (x1, y1, x2, y2) {
         ctx.beginPath();
         ctx.moveTo(conv(x1), conv(y1));
@@ -16,7 +51,7 @@ window.onload = function () {
     };
     var drawCharge = function (x, y, color) {
         ctx.beginPath();
-        ctx.arc(conv(x), conv(y), conv(0.5), 0, 2 * Math.PI, false);
+        ctx.arc(conv(x), conv(y), conv(0.4), 0, 2 * Math.PI, false);
         ctx.fillStyle = color;
         ctx.fill();
     };
@@ -46,20 +81,18 @@ window.onload = function () {
         drawLine(45, 40, 47, 50);
         drawLine(47, 50, 48, 45);
     };
-    var drawCharges = function () {
-        for (var i = 0; i < 100; ++i) {
+    var drawPlateCharges = function (n) {
+        for (var i = 0; i < n; ++i) {
             var r = i % 15;
             var c_1 = (i - r) / 15;
-            drawNegative(39.4 - 0.2 * c_1, 2.5 + r * 2);
+            drawNegative(39.4 - c_1, 2.5 + r);
         }
-        for (var i = 0; i < 100; ++i) {
+        for (var i = 0; i < n; ++i) {
             var r = i % 15;
             var c_2 = (i - r) / 15;
-            drawPositive(45.6 + 0.2 * c_2, 2.5 + r * 2);
+            drawPositive(45.6 + c_2, 2.5 + r);
         }
     };
-    var offset = 0;
-    var chargeSpacing = 10;
     var l1 = wireStartX - wireLeftX;
     var l2 = wireBottomY - wireTopY;
     var l3 = wireRightX - wireLeftX;
@@ -84,6 +117,11 @@ window.onload = function () {
         pos -= l2;
         return [wireRightX - pos, wireTopY];
     }
+    var offset = 0;
+    var chargeSpacing = 5;
+    var q0 = 45;
+    var frameDelay = 25 / 1000;
+    var timeFactor = 1 / 4;
     var frame = function () {
         ctx.clearRect(0, 0, conv(100), conv(50));
         drawComponents();
@@ -91,8 +129,14 @@ window.onload = function () {
             var _a = wirePosToCoord(p), x = _a[0], y = _a[1];
             drawNegative(x, y);
         }
-        drawCharges();
-        offset += 0.5;
+        var q = q0 * Math.exp(-t);
+        info.innerText = "t = ".concat(t.toFixed(1), ", Q = ").concat(q.toPrecision(2));
+        drawPlateCharges(Math.round(q));
+        if (running) {
+            var dt = frameDelay * timeFactor;
+            offset += q0 * Math.exp(-t) * chargeSpacing * dt;
+            t += dt;
+        }
     };
-    setInterval(frame, 25);
+    setInterval(frame, frameDelay * 1000);
 };

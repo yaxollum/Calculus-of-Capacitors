@@ -1,10 +1,12 @@
 ## Discharging a capacitor
 
-When a charged capacitor is connected in a circuit to a resistor, charges will flow from the capacitor's positive plate, through the resistor, to the capacitor's negative plate. Eventually, the capacitor will become uncharged. During this discharging process, the capacitor's electric potential energy is converted into internal energy by the resistor.
+When a charged capacitor with a capacitance of $$C$$ and an initial charge of $$Q_0$$ is connected in a circuit to a resistor with a resistance of $$R$$, charges will flow from the capacitor's positive plate, through the resistor, to the capacitor's negative plate. During this discharging process, the capacitor's electric potential energy is converted into internal energy by the resistor.
 
 In this section, we will find a formula for the capacitor's charge $$Q$$ in terms of the time $$t$$.
 
-<canvas id="discharging-simulation"></canvas>
+Below is a simulation which demonstrates a capacitor being discharged through a resistor (each blue dot represents a negative charge, and each red dot represents a positive charge):
+
+<div id="discharging-simulation"></div>
 
 ### Creating a differential equation
 
@@ -32,4 +34,4 @@ where $$X$$ is a constant.
 Initially, when $$t=0$$, the capacitor's charge $$Q$$ is equal to $$Q_0$$. This implies that $$e^X=Q_0$$. Therefore, we now have a formula expressing $$Q$$ in terms of $$t$$:
 \\[Q=Q_0 \cdot e^{-\frac{t}{RC}}\\]
 
-This shows that when a capacitor is discharged through a resistor, its charge decays exponentially.
+This shows that when a capacitor is discharged through a resistor, its charge decays exponentially. You can see this happening in the simulation which was shown at the beginning of this section.
