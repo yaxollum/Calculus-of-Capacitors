@@ -8,55 +8,97 @@ window.onload = () => {
     c.style.maxWidth = "100%";
     c.style.maxHeight = "50vh";
 
-    let convX = (x: number) => x / 100 * c.width / dpi;
-    let convY = (y: number) => y / 100 * c.height / dpi;
+    let conv = (x: number) => x / 100 * c.width / dpi;
     let drawLine = (x1: number, y1: number, x2: number, y2: number) => {
         ctx.beginPath();
-        ctx.moveTo(convX(x1), convY(y1));
-        ctx.lineTo(convX(x2), convY(y2));
+        ctx.moveTo(conv(x1), conv(y1));
+        ctx.lineTo(conv(x2), conv(y2));
         ctx.stroke();
     }
     let drawCharge = (x: number, y: number, color: string) => {
         ctx.beginPath();
-        ctx.arc(convX(x), convY(y), convX(0.5), 0, 2 * Math.PI, false);
+        ctx.arc(conv(x), conv(y), conv(0.5), 0, 2 * Math.PI, false);
         ctx.fillStyle = color;
         ctx.fill();
     }
     let drawPositive = (x: number, y: number) => drawCharge(x, y, "red");
     let drawNegative = (x: number, y: number) => drawCharge(x, y, "blue");
 
-    // capacitor
-    drawLine(40, 5, 40, 35);
-    drawLine(45, 5, 45, 35);
+    const wireStartX = 40;
+    const wireEndX = 45;
+    const wireTopY = 10;
+    const wireLeftX = 5;
+    const wireBottomY = 45;
+    const wireRightX = 95;
+    let drawComponents = () => {
+        // capacitor
+        drawLine(40, 2.5, 40, 17.5);
+        drawLine(45, 2.5, 45, 17.5);
 
-    // wires
-    drawLine(40, 20, 5, 20);
-    drawLine(5, 20, 5, 90);
-    drawLine(5, 90, 40, 90);
-    drawLine(48, 90, 95, 90);
-    drawLine(95, 90, 95, 20);
-    drawLine(95, 20, 45, 20);
+        // wires
+        drawLine(wireStartX, wireTopY, wireLeftX, wireTopY);
+        drawLine(wireLeftX, wireTopY, wireLeftX, wireBottomY);
+        drawLine(wireLeftX, wireBottomY, 40, wireBottomY);
+        drawLine(48, wireBottomY, wireRightX, wireBottomY);
+        drawLine(wireRightX, wireBottomY, wireRightX, wireTopY);
+        drawLine(wireRightX, wireTopY, wireEndX, wireTopY);
 
-    // resistor
-    drawLine(40, 90, 41, 80);
-    drawLine(41, 80, 43, 100);
-    drawLine(43, 100, 45, 80);
-    drawLine(45, 80, 47, 100);
-    drawLine(47, 100, 48, 90);
-
-    for (let i = 0; i < 100; ++i) {
-        let r = i % 15;
-        let c = (i - r) / 15;
-        drawNegative(39.4 - 0.2 * c, 5 + r * 2);
+        // resistor
+        drawLine(40, 45, 41, 40);
+        drawLine(41, 40, 43, 50);
+        drawLine(43, 50, 45, 40);
+        drawLine(45, 40, 47, 50);
+        drawLine(47, 50, 48, 45);
     }
-    for (let i = 0; i < 100; ++i) {
-        let r = i % 15;
-        let c = (i - r) / 15;
-        drawPositive(45.6 + 0.2 * c, 5 + r * 2);
+    let drawCharges = () => {
+        for (let i = 0; i < 100; ++i) {
+            let r = i % 15;
+            let c = (i - r) / 15;
+            drawNegative(39.4 - 0.2 * c, 2.5 + r * 2);
+        }
+        for (let i = 0; i < 100; ++i) {
+            let r = i % 15;
+            let c = (i - r) / 15;
+            drawPositive(45.6 + 0.2 * c, 2.5 + r * 2);
+        }
     }
 
+    let offset = 0;
+    let chargeSpacing = 10;
+
+    const l1 = wireStartX - wireLeftX;
+    const l2 = wireBottomY - wireTopY;
+    const l3 = wireRightX - wireLeftX;
+    const l4 = wireRightX - wireEndX;
+    const wireLength = l1 + 2 * l2 + l3 + l4;
+    function wirePosToCoord(pos: number): [number, number] {
+        if (pos <= l1) {
+            return [wireStartX - pos, wireTopY];
+        }
+        pos -= l1;
+        if (pos <= l2) {
+            return [wireLeftX, wireTopY + pos];
+        }
+        pos -= l2;
+        if (pos <= l3) {
+            return [wireLeftX + pos, wireBottomY];
+        }
+        pos -= l3;
+        if (pos <= l2) {
+            return [wireRightX, wireBottomY - pos];
+        }
+        pos -= l2;
+        return [wireRightX - pos, wireTopY];
+    }
     let frame = () => {
-
+        ctx.clearRect(0, 0, conv(100), conv(50));
+        drawComponents();
+        for (let p = offset % chargeSpacing; p < wireLength; p += chargeSpacing) {
+            let [x, y] = wirePosToCoord(p);
+            drawNegative(x, y);
+        }
+        drawCharges();
+        offset += 0.5;
     }
-    setInterval(frame, 10);
+    setInterval(frame, 25);
 }
