@@ -4,6 +4,7 @@ window.onload = function () {
     container.style.borderWidth = "1px";
     container.style.padding = "1em";
     container.style.margin = "1em";
+    container.style.cursor = "default";
     var controls = document.createElement("p");
     var info = document.createElement("p");
     var running = false;
@@ -130,7 +131,7 @@ window.onload = function () {
             drawNegative(x, y);
         }
         var q = q0 * Math.exp(-t);
-        info.innerText = "t = ".concat(t.toFixed(1), ", Q = ").concat(q.toPrecision(2));
+        info.innerText = "t = " + t.toFixed(1) + ", Q = " + q.toPrecision(2);
         drawPlateCharges(Math.round(q));
         if (running) {
             var dt = frameDelay * timeFactor;

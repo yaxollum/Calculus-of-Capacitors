@@ -6,6 +6,7 @@ window.onload = () => {
   container.style.borderWidth = "1px";
   container.style.padding = "1em";
   container.style.margin = "1em";
+  container.style.cursor = "default";
 
   let controls = document.createElement("p");
   let info = document.createElement("p");
